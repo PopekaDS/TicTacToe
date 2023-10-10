@@ -29,30 +29,9 @@ def main():
     print('Thanks for playing!')
 
 
-def getBlankBoard():
-    """Create a new, blank tic-tac-toe board."""
-    # Map of space numbers: 1|2|3
-    #                       -+-+-
-    #                       4|5|6
-    #                       -+-+-
-    #                       7|8|9
-    # Keys are 1 through 9, the values are X, O, or BLANK:
-    board = {}
-    for space in ALL_SPACES:
-        board[space] = BLANK  # All spaces start as blank.
-    return board
 
 
-def getBoardStr(board):
-    """Return a text-representation of the board."""
-    return '''
-      {}|{}|{}  1 2 3
-      -+-+-
-      {}|{}|{}  4 5 6
-      -+-+-
-      {}|{}|{}  7 8 9'''.format(board['1'], board['2'], board['3'],
-                                board['4'], board['5'], board['6'],
-                                board['7'], board['8'], board['9'])
+
 
 def isValidSpace(board, space):
     """Returns True if the space on the board is a valid space number
@@ -96,9 +75,42 @@ def updateBoard(board, space, mark):
 #include <iostream>
 // #include <vector>
 using namespace std;
+
+char ALL_SPACES[9] = { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+char X = 'X', O = 'O', BLANK = ' '; // Constants for string values.
+
+char* getBlankBoard() {
+    // Create a new, blank tic-tac-toe board.
+    // Map of space numbers : 1 | 2 | 3
+    //                        --+---+--
+    //                        4 | 5 | 6 
+    //                        --+---+--
+    //                        7 | 8 | 9
+    // Keys are 1 through 9, the values are X, O, or BLANK:
+    char* board = new char[9];
+    for (int i = 0; i < 9; i++) {
+        board[i] = BLANK; // All spaces start as blank.
+    }
+
+    return board;
+}
+
+void getBoardStr(char* board) {
+    // Return a text-representation of the board.
+    cout << board[0] << " | " << board[1] << " | " << board[2] << "   1 2 3\n";
+    cout << "--+---+--\n";
+    cout << board[3] << " | " << board[4] << " | " << board[5] << "   4 5 6\n";
+    cout << "--+---+--\n";
+    cout << board[6] << " | " << board[7] << " | " << board[8] << "   7 8 9\n";
+}
+
 int main() {
-    char ALL_SPACES[9] = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
-    char X = 'X', O = 'O', BLANK = ' '; // Constants for string values.
+
+
+
+    char* board = new char[9];
+    board = getBlankBoard();
+    getBoardStr(board);
 
 
 
