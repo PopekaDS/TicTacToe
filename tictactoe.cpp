@@ -31,28 +31,6 @@ def main():
 
 
 
-
-
-def isValidSpace(board, space):
-    """Returns True if the space on the board is a valid space number
-    and the space is blank."""
-    return space in ALL_SPACES and board[space] == BLANK
-
-
-def isWinner(board, player):
-    """Return True if player is a winner on this TTTBoard."""
-    # Shorter variable names used here for readablility:
-    b, p = board, player
-    # Check for 3 marks across 3 rows, 3 columns, and 2 diagonals.
-    return ((b['1'] == b['2'] == b['3'] == p) or  # Across top
-            (b['4'] == b['5'] == b['6'] == p) or  # Across middle
-            (b['7'] == b['8'] == b['9'] == p) or  # Across bottom
-            (b['1'] == b['4'] == b['7'] == p) or  # Down left
-            (b['2'] == b['5'] == b['8'] == p) or  # Down middle
-            (b['3'] == b['6'] == b['9'] == p) or  # Down right
-            (b['3'] == b['5'] == b['7'] == p) or  # Diagonal
-            (b['1'] == b['5'] == b['9'] == p))    # Diagonal
-
 def isBoardFull(board):
     """Return True if every space on the board has been taken."""
     for space in ALL_SPACES:
@@ -104,14 +82,56 @@ void getBoardStr(char* board) {
     cout << board[6] << " | " << board[7] << " | " << board[8] << "   7 8 9\n";
 }
 
+bool isValidSpace(char* board, int space) {
+    // Returns True if the space on the board is a valid space number
+    // and the space is blank.
+    return (space >= 1 && space <= 9) and board[space - 1] == BLANK;
+}
+
+bool shortIsWinner(char* board, int first, int second, int three, char player) { // исправить
+    if (board[first] == board[second] && board[second] == board[three] && board[three] == player) {
+        return true;
+    }
+
+    return false;
+}
+
+bool isWinner(char* board, char player) {
+    // Return True if player is a winner on this TTTBoard.
+    // Shorter variable names used here for readablility:
+    // Check for 3 marks across 3 rows, 3 columns, and 2 diagonals.
+    if (shortIsWinner(board, 0, 1, 2, player))
+        return true; // Across top
+
+    if (shortIsWinner(board, 3, 4, 5, player))
+        return true; // Across middle
+
+    if (shortIsWinner(board, 6, 7, 8, player))
+        return true; // Across bottom
+
+    if (shortIsWinner(board, 0, 3, 6, player))
+        return true; // Down left
+
+    if (shortIsWinner(board, 1, 4, 7, player))
+        return true; // Down middle
+
+    if (shortIsWinner(board, 2, 5, 8, player))
+        return true; // Down right
+
+    if (shortIsWinner(board, 2, 4, 6, player))
+        return true; // Diagonal
+
+    if (shortIsWinner(board, 0, 4, 8, player))
+        return true; // Diagonal
+
+    return false;
+}
+
 int main() {
-
-
 
     char* board = new char[9];
     board = getBlankBoard();
     getBoardStr(board);
-
 
 
     return 0;
