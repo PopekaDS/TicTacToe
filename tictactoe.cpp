@@ -1,54 +1,7 @@
-/*
-def main():
-    print('Welcome to Tic-Tac-Toe!')
-    gameBoard = getBlankBoard()  # Create a TTT board dictionary.
-    currentPlayer, nextPlayer = X, O  # X goes first, O goes next.
-
-    while True:  # Main game loop.
-        # Display the board on the screen:
-        print(getBoardStr(gameBoard))
-
-        # Keep asking the player until they enter a number 1-9:
-        move = None
-        while not isValidSpace(gameBoard, move):
-            print('What is {}\'s move? (1-9)'.format(currentPlayer))
-            move = input('> ')
-        updateBoard(gameBoard, move, currentPlayer)  # Make the move.
-
-        # Check if the game is over:
-        if isWinner(gameBoard, currentPlayer):  # Check for a winner.
-            print(getBoardStr(gameBoard))
-            print(currentPlayer + ' has won the game!')
-            break
-        elif isBoardFull(gameBoard):  # Check for a tie.
-            print(getBoardStr(gameBoard))
-            print('The game is a tie!')
-            break
-        # Switch turns to the next player:
-        currentPlayer, nextPlayer = nextPlayer, currentPlayer
-    print('Thanks for playing!')
-
-
-
-
-def isBoardFull(board):
-    """Return True if every space on the board has been taken."""
-    for space in ALL_SPACES:
-        if board[space] == BLANK:
-            return False  # If any space is blank, return False.
-    return True  # No spaces are blank, so return True.
-
-
-def updateBoard(board, space, mark):
-    """Sets the space on the board to mark."""
-    board[space] = mark
-
-
-*/
-
-// Tic-Tac-Toe, by Al Sweigart al@inventwithpython.com
+// Tic-Tac-Toe, by Al Sweigart
 // The classic board game.
-// This code is available at https ://nostarch.com/big-book-small-python-programming
+// This code is available at https://nostarch.com/big-book-small-python-programming
+// #76 TIC-TAC-TOE
 
 #include <iostream>
 // #include <vector>
@@ -127,12 +80,55 @@ bool isWinner(char* board, char player) {
     return false;
 }
 
+bool isBoardFull(char* board) {
+    // Return True if every space on the board has been taken.
+    for (int i = 0; i < 9; i++) {
+        if (board[i] == BLANK) {
+            return false; // If any space is blank, return False.
+        }
+    }
+
+    return true; // No spaces are blank, so return True.
+}
+
+void updateBoard(char* board, int space, char mark) {
+    // Sets the space on the board to mark.
+    board[space - 1] = mark;
+}
+
 int main() {
+    cout << "Welcome to Tic-Tac-Toe!\n\n";
+    char* gameBoard = new char[9]; // Create a TTT board dictionary.
+    gameBoard = getBlankBoard();
+    char currentPlayer = X, nextPlayer = O; // X goes first, O goes next.
 
-    char* board = new char[9];
-    board = getBlankBoard();
-    getBoardStr(board);
+    while (1) { // Main game loop.
+        // Display the board on the screen:
+        getBoardStr(gameBoard);
 
+        // Keep asking the player until they enter a number 1-9:
+        int move = 0;
+        while (!isValidSpace(gameBoard, move)) {
+            cout << "What is " << currentPlayer << "'s move? (1-9)\n";
+            cout << "> "; cin >> move;
+        }
+        updateBoard(gameBoard, move, currentPlayer); // Make the move. 
+
+        // Check if the game is over:
+        if (isWinner(gameBoard, currentPlayer)) { // Check for a winner.
+            getBoardStr(gameBoard);
+            cout << currentPlayer << " has won the game!\n";
+            break;
+        } else if (isBoardFull(gameBoard)) { // Check for a tie.
+            getBoardStr(gameBoard);
+            cout << "The game is a tie!\n";
+            break;
+        }
+
+        // Switch turns to the next player:
+        swap(currentPlayer, nextPlayer);
+    }
+    cout << "Thanks for playing!\n";
 
     return 0;
 }
